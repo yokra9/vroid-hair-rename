@@ -1,0 +1,11 @@
+{
+  "name": "vroid-hair-rename",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "yokra9",
+  "license": "ISC"
+}
