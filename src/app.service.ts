@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
+import { Display } from './display';
+import { Preset, Color } from './preset';
+
+interface Item {
+  // ディレクトリ名
+  path: string;
+  // プリセット
+  preset: Preset;
+}
 
 @Injectable()
 export class AppService {
-  getList(): string {
+  getList(): Display[] {
     const fs = require('fs');
 
     // プリセットの一覧を取得
-    const presets = fs
+    const presets: Display[] = fs
       .readdirSync('./tmp/p')
       // 各プリセットのJSONを読み込む
-      .map((path) => [path, require(`../tmp/p/${path}/preset.json`)])
+      .map(
+        (path: string): Item => {
+          return {
+            path,
+            preset: require(`../tmp/p/${path}/preset.json`) as Preset,
+          };
+        },
+      )
       // JSONから一覧表示に必要な情報を抜き出す
-      .map(([path, json]) => [
-        // ディレクトリ名
-        path,
-        // 表示名
-        json._DisplayName,
-        // テクスチャID
-        json._MaterialSet._Materials[0]._MainTextureId,
-        // テクスチャ色
-        json._MaterialSet._Materials[0]._Color,
-      ]);
+      .map(
+        (item: Item): Display => {
+          return {
+            path: item.path,
+            name: item.preset._DisplayName,
+            color: item.preset._MaterialSet._Materials[0]._Color,
+          };
+        },
+      );
 
     return presets;
   }
