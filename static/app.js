@@ -11728,13 +11728,19 @@ const vue_1 = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtim
 const axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 exports.default = {
     setup() {
-        const presets = vue_1.ref({ presets: [] });
+        const presets = vue_1.ref([]);
+        const test = () => {
+            console.log(presets.value.map((p) => {
+                console.log(p.displayName);
+            }));
+        };
         vue_1.onMounted(async () => {
             const res = await axios_1.default.get('./');
-            presets.value = res.data;
+            presets.value = res.data.presets;
         });
         return {
             presets,
+            test,
         };
     },
 };
@@ -11818,7 +11824,26 @@ __webpack_require__.r(__webpack_exports__);
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("pre", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.presets), 1 /* TEXT */)
+    ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.presets, (preset) => {
+      return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("fieldset", {
+        key: preset.name
+      }, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("legend", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(preset.name), 1 /* TEXT */),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+          type: "text",
+          "onUpdate:modelValue": $event => (preset.displayName = $event)
+        }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
+          [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, preset.displayName]
+        ]),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(preset.texture), 1 /* TEXT */),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(preset.color), 1 /* TEXT */)
+      ]))
+    }), 128 /* KEYED_FRAGMENT */)),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      type: "button",
+      onClick: _cache[1] || (_cache[1] = $event => ($setup.test())),
+      value: "テストボタン"
+    })
   ]))
 }
 

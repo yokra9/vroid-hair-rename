@@ -1,6 +1,12 @@
 <template>
   <div>
-    <pre>{{ presets }}</pre>
+    <fieldset v-for="preset in presets" :key="preset.name">
+      <legend>{{ preset.name }}</legend>
+      <input type="text" v-model="preset.displayName" />
+      <p>{{ preset.texture }}</p>
+      <p>{{ preset.color }}</p>
+    </fieldset>
+    <input type="button" @click="test()" value="テストボタン" />
   </div>
 </template>
 
@@ -11,15 +17,24 @@ import axios from 'axios';
 
 export default {
   setup() {
-    const presets = ref<Presets>({ presets: [] });
+    const presets = ref<FilteredPreset[]>([]);
+
+    const test = () => {
+      console.log(
+        presets.value.map((p) => {
+          console.log(p.displayName);
+        }),
+      );
+    };
 
     onMounted(async () => {
       const res = await axios.get('./');
-      presets.value = res.data as Presets;
+      presets.value = res.data.presets as FilteredPreset[];
     });
 
     return {
       presets,
+      test,
     };
   },
 };
