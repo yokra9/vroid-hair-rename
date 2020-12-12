@@ -1,42 +1,48 @@
 import { Injectable } from '@nestjs/common';
-import { Display } from './display';
-import { Preset, Color } from './preset';
+import { Presets, FilteredPreset } from './presets';
+import { Preset } from './preset';
+const path = require('path');
 
 interface Item {
   // ディレクトリ名
-  path: string;
+  name: string;
   // プリセット
   preset: Preset;
 }
 
 @Injectable()
 export class AppService {
-  getList(): Display[] {
+  getList(): Presets {
     const fs = require('fs');
 
+    const presetDir = path.resolve(__dirname, '../tmp/p');
+
     // プリセットの一覧を取得
-    const presets: Display[] = fs
-      .readdirSync('./tmp/p')
+    const presets: FilteredPreset[] = fs
+      .readdirSync(presetDir)
       // 各プリセットのJSONを読み込む
       .map(
-        (path: string): Item => {
+        (name: string): Item => {
           return {
-            path,
-            preset: require(`../tmp/p/${path}/preset.json`) as Preset,
+            name,
+            preset: JSON.parse(
+              fs.readFileSync(path.join(presetDir, name, 'preset.json')),
+            ) as Preset,
           };
         },
       )
       // JSONから一覧表示に必要な情報を抜き出す
       .map(
-        (item: Item): Display => {
+        (item: Item): FilteredPreset => {
           return {
-            path: item.path,
-            name: item.preset._DisplayName,
+            name: item.name,
+            displayName: item.preset._DisplayName,
             color: item.preset._MaterialSet._Materials[0]._Color,
+            texture: item.preset._MaterialSet._Materials[0]._MainTextureId,
           };
         },
       );
 
-    return presets;
+    return { presets };
   }
 }

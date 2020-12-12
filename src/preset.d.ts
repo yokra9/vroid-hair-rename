@@ -1,3 +1,5 @@
+// 実際の JSON から QuicType で生成した型
+
 export interface Preset {
     Hairishes:      Hairish[];
     _MaterialSet:   MaterialSet;

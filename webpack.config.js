@@ -6,7 +6,7 @@ module.exports = {
   entry: './src2/app.js',
   output: {
     filename: 'app.js',
-    path: path.resolve(__dirname, 'tmp'),
+    path: path.resolve(__dirname, 'static'),
   },
   devtool: 'source-map',
   mode: process.env.NODE_ENV || 'development',

@@ -1,13 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { Display } from './display';
+import { Presets } from './presets';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getList(): Display[] {
+  getList(): Presets {
     return this.appService.getList();
   }
 }

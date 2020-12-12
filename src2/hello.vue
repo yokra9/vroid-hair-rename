@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ countValue }} {{ year }}</h1>
+    <h1>{{ countValue }} やで</h1>
     <div>
       <button @click="increment">+</button>
       <button @click="decrement">-</button>
