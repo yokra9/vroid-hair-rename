@@ -1,33 +1,25 @@
 <template>
   <div>
-    <h1>{{ countValue }} やで</h1>
-    <div>
-      <button @click="increment">+</button>
-      <button @click="decrement">-</button>
-    </div>
+    <pre>{{ presets }}</pre>
   </div>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { Presets, FilteredPreset } from '../src/presets';
+import axios from 'axios';
 
 export default {
   setup() {
+    const presets = ref<Presets>({ presets: [] });
 
-    const countValue = ref(0);
-
-    const increment = () => {
-      countValue.value += 1;
-    };
-
-    const decrement = () => {
-      countValue.value -= 1;
-    };
+    onMounted(async () => {
+      const res = await axios.get('./');
+      presets.value = res.data as Presets;
+    });
 
     return {
-      countValue,
-      increment,
-      decrement,
+      presets,
     };
   },
 };

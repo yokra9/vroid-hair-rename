@@ -19,7 +19,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "vue": "webpack",
-    "vue:dev": "webpack --watch"
+    "vue:dev": "webpack --watch",
+    "dev": "run-p start:dev vue:dev"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
@@ -27,6 +28,7 @@
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/serve-static": "^2.1.4",
     "@vue/compiler-sfc": "^3.0.4",
+    "axios": "^0.21.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
@@ -50,6 +52,7 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.6.3",
+    "npm-run-all": "^4.1.5",
     "prettier": "^2.1.2",
     "supertest": "^6.0.0",
     "ts-jest": "^26.4.3",
