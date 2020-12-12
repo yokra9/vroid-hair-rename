@@ -3,7 +3,7 @@
     <fieldset v-for="preset in presets" :key="preset.name">
       <legend>{{ preset.name }}</legend>
       <input type="text" v-model="preset.displayName" />
-      <p>{{ preset.texture }}</p>
+      <img :src="`data:image/png;base64,${preset.texture}`" />
       <p>{{ preset.color }}</p>
     </fieldset>
     <input type="button" @click="test()" value="テストボタン" />
@@ -28,8 +28,12 @@ export default {
     };
 
     onMounted(async () => {
-      const res = await axios.get('./');
-      presets.value = res.data.presets as FilteredPreset[];
+      try {
+        const res = await axios.get('./');
+        presets.value = res.data.presets as FilteredPreset[];
+      } catch (err) {
+        console.error(err.response.data);
+      }
     });
 
     return {

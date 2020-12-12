@@ -11735,8 +11735,13 @@ exports.default = {
             }));
         };
         vue_1.onMounted(async () => {
-            const res = await axios_1.default.get('./');
-            presets.value = res.data.presets;
+            try {
+                const res = await axios_1.default.get('./');
+                presets.value = res.data.presets;
+            }
+            catch (err) {
+                console.error(err.response.data);
+            }
         });
         return {
             presets,
@@ -11835,7 +11840,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, preset.displayName]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(preset.texture), 1 /* TEXT */),
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+          src: `data:image/png;base64,${preset.texture}`
+        }, null, 8 /* PROPS */, ["src"]),
         (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(preset.color), 1 /* TEXT */)
       ]))
     }), 128 /* KEYED_FRAGMENT */)),

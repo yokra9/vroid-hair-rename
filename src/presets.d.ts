@@ -5,11 +5,15 @@ export interface Presets {
   presets: FilteredPreset[];
 }
 
-// 画面で必要十分な情報だけに絞った型
+// 画面でプリセットを表現するのに必要な情報
 export interface FilteredPreset {
+  // ディレクトリ名
   name: string;
+  // 表示名
   displayName: string;
+  // テクスチャ（base64）
   texture: string;
+  // 色（RGB）
   color: Color;
 }
 
