@@ -15,5 +15,7 @@ export interface FilteredPreset {
   texture: string;
   // 色（RGB）
   color: Color;
+  shadeColor: Color;
+  outlineColor: Color;
+  highlightColor: Color;
 }
-

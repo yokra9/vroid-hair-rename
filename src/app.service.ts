@@ -29,7 +29,10 @@ export class AppService {
   // ディレクトリ名のプリセットを更新
   writePreset(name: string, preset: Preset) {
     try {
-      fs.writeFileSync(path.join(presetDir, name, 'preset.json'), JSON.stringify(preset));
+      fs.writeFileSync(
+        path.join(presetDir, name, 'preset.json'),
+        JSON.stringify(preset),
+      );
     } catch (err) {
       throw new Error(`プリセットに書き込めません ${name} ${err}`);
     }
@@ -74,6 +77,10 @@ export class AppService {
             name: item.name,
             displayName: item.preset._DisplayName,
             color: item.preset._MaterialSet._Materials[0]._Color,
+            shadeColor: item.preset._MaterialSet._Materials[0]._ShadeColor,
+            highlightColor:
+              item.preset._MaterialSet._Materials[0]._HighlightColor,
+            outlineColor: item.preset._MaterialSet._Materials[0]._OutlineColor,
             texture: this.getTexture(
               item.name,
               item.preset._MaterialSet._Materials[0]._MainTextureId,

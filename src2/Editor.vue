@@ -3,8 +3,11 @@
     <fieldset v-for="preset in presets" :key="preset.name">
       <legend>{{ preset.name }}</legend>
       <input type="text" v-model="preset.displayName" />
-      <img :src="`data:image/png;base64,${preset.texture}`" />
-      <p>{{ preset.color }}</p>
+      <img :src="`data:image/png;base64,${preset.texture}`" class="texture" />
+      <p :style="{ backgroundColor: rgb(preset.color) }">基本色</p>
+      <p :style="{ backgroundColor: rgb(preset.shadeColor) }">影色</p>
+      <p :style="{ backgroundColor: rgb(preset.highlightColor) }">ハイライト</p>
+      <p :style="{ backgroundColor: rgb(preset.outlineColor) }">アウトライン</p>
     </fieldset>
     <input type="button" @click="postPreset()" value="更新" />
   </div>
@@ -14,6 +17,7 @@
 import { ref, onMounted } from 'vue';
 import { Presets, FilteredPreset } from '../src/presets';
 import axios from 'axios';
+import { Color, Preset } from 'src/preset';
 
 export default {
   setup() {
@@ -42,12 +46,22 @@ export default {
       }
     };
 
+    const rgb = (color: Color) => `rgb(${color.r}, ${color.g}, ${color.b})`;
+
     onMounted(() => getPreset());
 
     return {
       presets,
       postPreset,
+      rgb,
     };
   },
 };
 </script>
+
+<style scoped>
+.texture {
+  height: 150px;
+  float: left;
+}
+</style>
