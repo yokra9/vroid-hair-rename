@@ -11729,12 +11729,7 @@ const axios_1 = __webpack_require__(/*! axios */ "./node_modules/axios/index.js"
 exports.default = {
     setup() {
         const presets = vue_1.ref([]);
-        const test = () => {
-            console.log(presets.value.map((p) => {
-                console.log(p.displayName);
-            }));
-        };
-        vue_1.onMounted(async () => {
+        const getPreset = async () => {
             try {
                 const res = await axios_1.default.get('./');
                 presets.value = res.data.presets;
@@ -11742,10 +11737,22 @@ exports.default = {
             catch (err) {
                 console.error(err.response.data);
             }
-        });
+        };
+        const postPreset = async () => {
+            const data = {
+                presets: presets.value,
+            };
+            try {
+                const res = await axios_1.default.post('./', data);
+            }
+            catch (err) {
+                console.error(err.response.data);
+            }
+        };
+        vue_1.onMounted(() => getPreset());
         return {
             presets,
-            test,
+            postPreset,
         };
     },
 };
@@ -11848,8 +11855,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }), 128 /* KEYED_FRAGMENT */)),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
       type: "button",
-      onClick: _cache[1] || (_cache[1] = $event => ($setup.test())),
-      value: "テストボタン"
+      onClick: _cache[1] || (_cache[1] = $event => ($setup.postPreset())),
+      value: "更新"
     })
   ]))
 }

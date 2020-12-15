@@ -6,7 +6,7 @@
       <img :src="`data:image/png;base64,${preset.texture}`" />
       <p>{{ preset.color }}</p>
     </fieldset>
-    <input type="button" @click="test()" value="テストボタン" />
+    <input type="button" @click="postPreset()" value="更新" />
   </div>
 </template>
 
@@ -19,26 +19,34 @@ export default {
   setup() {
     const presets = ref<FilteredPreset[]>([]);
 
-    const test = () => {
-      console.log(
-        presets.value.map((p) => {
-          console.log(p.displayName);
-        }),
-      );
-    };
-
-    onMounted(async () => {
+    // プリセットを取得
+    const getPreset = async () => {
       try {
-        const res = await axios.get('./');
-        presets.value = res.data.presets as FilteredPreset[];
+        const res = await axios.get<Presets>('./');
+        presets.value = res.data.presets;
       } catch (err) {
         console.error(err.response.data);
       }
-    });
+    };
+
+    // プリセットを更新
+    const postPreset = async () => {
+      const data: Presets = {
+        presets: presets.value,
+      };
+
+      try {
+        const res = await axios.post('./', data);
+      } catch (err) {
+        console.error(err.response.data);
+      }
+    };
+
+    onMounted(() => getPreset());
 
     return {
       presets,
-      test,
+      postPreset,
     };
   },
 };
