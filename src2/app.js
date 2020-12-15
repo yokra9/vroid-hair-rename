@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
-import Hello from './hello.vue';
+import Editor from './Editor.vue';
 
 document.addEventListener('DOMContentLoaded', () => {
-  createApp(Hello).mount('#app');
+  createApp(Editor).mount('#app');
 });
