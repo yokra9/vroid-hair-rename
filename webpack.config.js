@@ -8,8 +8,8 @@ module.exports = {
     filename: 'app.js',
     path: path.resolve(__dirname, 'static'),
   },
-  devtool: 'source-map',
-  mode: process.env.NODE_ENV || 'development',
+  devtool: process.env.NODE_ENV == 'development' ? 'source-map' : false,
+  mode: process.env.NODE_ENV,
   module: {
     rules: [
       {
