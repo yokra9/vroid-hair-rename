@@ -1643,7 +1643,7 @@ function normalizeEmitsOptions(comp, appContext, asMixin = false) {
     let normalized = {};
     // apply mixin/extends props
     let hasExtends = false;
-    if (__VUE_OPTIONS_API__ && !(0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isFunction)(comp)) {
+    if ( true && !(0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isFunction)(comp)) {
         const extendEmits = (raw) => {
             hasExtends = true;
             (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.extend)(normalized, normalizeEmitsOptions(raw, appContext, true));
@@ -2677,7 +2677,7 @@ function normalizePropsOptions(comp, appContext, asMixin = false) {
     const needCastKeys = [];
     // apply mixin/extends props
     let hasExtends = false;
-    if (__VUE_OPTIONS_API__ && !(0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isFunction)(comp)) {
+    if ( true && !(0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.isFunction)(comp)) {
         const extendProps = (raw) => {
             hasExtends = true;
             const [props, keys] = normalizePropsOptions(raw, appContext, true);
@@ -3963,7 +3963,7 @@ function createAppAPI(render, hydrate) {
                 return app;
             },
             mixin(mixin) {
-                if (__VUE_OPTIONS_API__) {
+                if (true) {
                     if (!context.mixins.includes(mixin)) {
                         context.mixins.push(mixin);
                         // global mixin with props/emits de-optimizes props/emits
@@ -3977,9 +3977,7 @@ function createAppAPI(render, hydrate) {
                             (mixin.name ? `: ${mixin.name}` : ''));
                     }
                 }
-                else if ((true)) {
-                    warn('Mixins are only available in builds supporting Options API');
-                }
+                else {}
                 return app;
             },
             component(name, component) {
@@ -4409,14 +4407,8 @@ function isSupported() {
  */
 function initFeatureFlags() {
     let needWarn = false;
-    if (typeof __VUE_OPTIONS_API__ !== 'boolean') {
-        needWarn = true;
-        (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.getGlobalThis)().__VUE_OPTIONS_API__ = true;
-    }
-    if (typeof __VUE_PROD_DEVTOOLS__ !== 'boolean') {
-        needWarn = true;
-        (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.getGlobalThis)().__VUE_PROD_DEVTOOLS__ = false;
-    }
+    if (false) {}
+    if (false) {}
     if (( true) && needWarn) {
         console.warn(`You are running the esm-bundler build of Vue. It is recommended to ` +
             `configure your bundler to explicitly replace feature flag globals ` +
@@ -7030,10 +7022,10 @@ const publicPropertiesMap = (0,_vue_shared__WEBPACK_IMPORTED_MODULE_1__.extend)(
     $parent: i => getPublicInstance(i.parent),
     $root: i => i.root && i.root.proxy,
     $emit: i => i.emit,
-    $options: i => (__VUE_OPTIONS_API__ ? resolveMergedOptions(i) : i.type),
+    $options: i => ( true ? resolveMergedOptions(i) : 0),
     $forceUpdate: i => () => queueJob(i.update),
     $nextTick: i => nextTick.bind(i.proxy),
-    $watch: i => (__VUE_OPTIONS_API__ ? instanceWatch.bind(i) : _vue_shared__WEBPACK_IMPORTED_MODULE_1__.NOOP)
+    $watch: i => ( true ? instanceWatch.bind(i) : 0)
 });
 const PublicInstanceProxyHandlers = {
     get({ _: instance }, key) {
@@ -7088,7 +7080,7 @@ const PublicInstanceProxyHandlers = {
                 accessCache[key] = 3 /* CONTEXT */;
                 return ctx[key];
             }
-            else if (!__VUE_OPTIONS_API__ || !isInBeforeCreate) {
+            else if ( false || !isInBeforeCreate) {
                 accessCache[key] = 4 /* OTHER */;
             }
         }
@@ -7491,7 +7483,7 @@ function finishComponentSetup(instance, isSSR) {
         }
     }
     // support for 2.x options
-    if (__VUE_OPTIONS_API__) {
+    if (true) {
         currentInstance = instance;
         (0,_vue_reactivity__WEBPACK_IMPORTED_MODULE_0__.pauseTracking)();
         applyOptions(instance, Component);
@@ -11735,7 +11727,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.texture[data-v-4e2ebe60] {\r\n  height: 150px;\r\n  float: left;\n}\r\n", "",{"version":3,"sources":["webpack://./src2/Editor.vue"],"names":[],"mappings":";AA8DA;EACE,aAAa;EACb,WAAW;AACb","sourcesContent":["<template>\r\n  <div>\r\n    <fieldset v-for=\"preset in presets\" :key=\"preset.name\">\r\n      <legend>{{ preset.name }}</legend>\r\n      <input type=\"text\" v-model=\"preset.displayName\" />\r\n      <img :src=\"`data:image/png;base64,${preset.texture}`\" class=\"texture\" />\r\n      <p :style=\"{ backgroundColor: rgb(preset.color) }\">基本色</p>\r\n      <p :style=\"{ backgroundColor: rgb(preset.shadeColor) }\">影色</p>\r\n      <p :style=\"{ backgroundColor: rgb(preset.highlightColor) }\">ハイライト</p>\r\n      <p :style=\"{ backgroundColor: rgb(preset.outlineColor) }\">アウトライン</p>\r\n    </fieldset>\r\n    <input type=\"button\" @click=\"postPreset()\" value=\"更新\" />\r\n  </div>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { ref, onMounted } from 'vue';\r\nimport { Presets, FilteredPreset } from '../src/presets';\r\nimport axios from 'axios';\r\nimport { Color, Preset } from 'src/preset';\r\n\r\nexport default {\r\n  setup() {\r\n    const presets = ref<FilteredPreset[]>([]);\r\n\r\n    // プリセットを取得\r\n    const getPreset = async () => {\r\n      try {\r\n        const res = await axios.get<Presets>('./');\r\n        presets.value = res.data.presets;\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n      }\r\n    };\r\n\r\n    // プリセットを更新\r\n    const postPreset = async () => {\r\n      const data: Presets = {\r\n        presets: presets.value,\r\n      };\r\n\r\n      try {\r\n        const res = await axios.post('./', data);\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n      }\r\n    };\r\n\r\n    const rgb = (color: Color) => `rgb(${color.r}, ${color.g}, ${color.b})`;\r\n\r\n    onMounted(() => getPreset());\r\n\r\n    return {\r\n      presets,\r\n      postPreset,\r\n      rgb,\r\n    };\r\n  },\r\n};\r\n</script>\r\n\r\n<style scoped>\r\n.texture {\r\n  height: 150px;\r\n  float: left;\r\n}\r\n</style>"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.texture[data-v-4e2ebe60] {\r\n  height: 150px;\n}\r\n", "",{"version":3,"sources":["webpack://./src2/Editor.vue"],"names":[],"mappings":";AAoEA;EACE,aAAa;AACf","sourcesContent":["<template>\r\n  <div>\r\n    <fieldset v-for=\"preset in presets\" :key=\"preset.name\">\r\n      <legend>{{ preset.name }}</legend>\r\n      <input type=\"text\" v-model=\"preset.displayName\" />\r\n      <div v-for=\"material in preset.materials\" :key=\"material.name\">\r\n        <img :src=\"`data:image/png;base64,${material.texture}`\" class=\"texture\" />\r\n        <p :style=\"{ backgroundColor: rgb(material._Color) }\">基本色</p>\r\n        <p :style=\"{ backgroundColor: rgb(material._ShadeColor) }\">影色</p>\r\n        <p :style=\"{ backgroundColor: rgb(material._HighlightColor) }\">\r\n          ハイライト\r\n        </p>\r\n        <p :style=\"{ backgroundColor: rgb(material._OutlineColor) }\">\r\n          アウトライン\r\n        </p>\r\n      </div>\r\n    </fieldset>\r\n    <input type=\"button\" @click=\"postPreset()\" value=\"更新\" />\r\n  </div>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { ref, onMounted } from 'vue';\r\nimport { Presets, FilteredPreset } from '../src/presets';\r\nimport axios from 'axios';\r\nimport { Color, Preset } from 'src/preset';\r\n\r\nexport default {\r\n  setup() {\r\n    const presets = ref<FilteredPreset[]>([]);\r\n\r\n    // プリセットを取得\r\n    const getPreset = async () => {\r\n      try {\r\n        const res = await axios.get<Presets>('./');\r\n        presets.value = res.data.presets;\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n      }\r\n    };\r\n\r\n    // プリセットを更新\r\n    const postPreset = async () => {\r\n      const data: Presets = {\r\n        presets: presets.value,\r\n      };\r\n\r\n      try {\r\n        const res = await axios.post('./', data);\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n      }\r\n    };\r\n\r\n    const rgb = (color: Color) => `rgb(${color.r}, ${color.g}, ${color.b})`;\r\n\r\n    onMounted(() => getPreset());\r\n\r\n    return {\r\n      presets,\r\n      postPreset,\r\n      rgb,\r\n    };\r\n  },\r\n};\r\n</script>\r\n\r\n<style scoped>\r\n.texture {\r\n  height: 150px;\r\n}\r\n</style>"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12321,22 +12313,28 @@ const render = /*#__PURE__*/_withId((_ctx, _cache, $props, $setup, $data, $optio
         }, null, 8 /* PROPS */, ["onUpdate:modelValue"]), [
           [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, preset.displayName]
         ]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-          src: `data:image/png;base64,${preset.texture}`,
-          class: "texture"
-        }, null, 8 /* PROPS */, ["src"]),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-          style: { backgroundColor: $setup.rgb(preset.color) }
-        }, "基本色", 4 /* STYLE */),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-          style: { backgroundColor: $setup.rgb(preset.shadeColor) }
-        }, "影色", 4 /* STYLE */),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-          style: { backgroundColor: $setup.rgb(preset.highlightColor) }
-        }, "ハイライト", 4 /* STYLE */),
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-          style: { backgroundColor: $setup.rgb(preset.outlineColor) }
-        }, "アウトライン", 4 /* STYLE */)
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(preset.materials, (material) => {
+          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+            key: material.name
+          }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+              src: `data:image/png;base64,${material.texture}`,
+              class: "texture"
+            }, null, 8 /* PROPS */, ["src"]),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+              style: { backgroundColor: $setup.rgb(material._Color) }
+            }, "基本色", 4 /* STYLE */),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+              style: { backgroundColor: $setup.rgb(material._ShadeColor) }
+            }, "影色", 4 /* STYLE */),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+              style: { backgroundColor: $setup.rgb(material._HighlightColor) }
+            }, " ハイライト ", 4 /* STYLE */),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+              style: { backgroundColor: $setup.rgb(material._OutlineColor) }
+            }, " アウトライン ", 4 /* STYLE */)
+          ]))
+        }), 128 /* KEYED_FRAGMENT */))
       ]))
     }), 128 /* KEYED_FRAGMENT */)),
     (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {

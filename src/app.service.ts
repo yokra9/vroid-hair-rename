@@ -76,14 +76,10 @@ export class AppService {
           return {
             name: item.name,
             displayName: item.preset._DisplayName,
-            color: item.preset._MaterialSet._Materials[0]._Color,
-            shadeColor: item.preset._MaterialSet._Materials[0]._ShadeColor,
-            highlightColor:
-              item.preset._MaterialSet._Materials[0]._HighlightColor,
-            outlineColor: item.preset._MaterialSet._Materials[0]._OutlineColor,
-            texture: this.getTexture(
-              item.name,
-              item.preset._MaterialSet._Materials[0]._MainTextureId,
+            materials: item.preset._MaterialSet._Materials.map((material) =>
+              Object.assign(material, {
+                texture: this.getTexture(item.name, material._MainTextureId),
+              }),
             ),
           };
         },

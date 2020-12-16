@@ -3,11 +3,17 @@
     <fieldset v-for="preset in presets" :key="preset.name">
       <legend>{{ preset.name }}</legend>
       <input type="text" v-model="preset.displayName" />
-      <img :src="`data:image/png;base64,${preset.texture}`" class="texture" />
-      <p :style="{ backgroundColor: rgb(preset.color) }">基本色</p>
-      <p :style="{ backgroundColor: rgb(preset.shadeColor) }">影色</p>
-      <p :style="{ backgroundColor: rgb(preset.highlightColor) }">ハイライト</p>
-      <p :style="{ backgroundColor: rgb(preset.outlineColor) }">アウトライン</p>
+      <div v-for="material in preset.materials" :key="material.name">
+        <img :src="`data:image/png;base64,${material.texture}`" class="texture" />
+        <p :style="{ backgroundColor: rgb(material._Color) }">基本色</p>
+        <p :style="{ backgroundColor: rgb(material._ShadeColor) }">影色</p>
+        <p :style="{ backgroundColor: rgb(material._HighlightColor) }">
+          ハイライト
+        </p>
+        <p :style="{ backgroundColor: rgb(material._OutlineColor) }">
+          アウトライン
+        </p>
+      </div>
     </fieldset>
     <input type="button" @click="postPreset()" value="更新" />
   </div>
@@ -62,6 +68,5 @@ export default {
 <style scoped>
 .texture {
   height: 150px;
-  float: left;
 }
 </style>
