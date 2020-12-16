@@ -29,6 +29,7 @@
     "@nestjs/serve-static": "^2.1.4",
     "@vue/compiler-sfc": "^3.0.4",
     "axios": "^0.21.0",
+    "bulma": "^0.9.1",
     "css-loader": "^5.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
