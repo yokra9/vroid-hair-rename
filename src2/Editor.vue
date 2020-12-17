@@ -77,20 +77,40 @@
                     :src="`data:image/png;base64,${material.texture}`"
                     class="texture"
                   />
-                  <p :style="{ backgroundColor: rgb(material._Color) }">
-                    基本色
-                  </p>
-                  <p :style="{ backgroundColor: rgb(material._ShadeColor) }">
-                    影色
-                  </p>
-                  <p
-                    :style="{ backgroundColor: rgb(material._HighlightColor) }"
-                  >
-                    ハイライト
-                  </p>
-                  <p :style="{ backgroundColor: rgb(material._OutlineColor) }">
-                    アウトライン
-                  </p>
+                  <div class="colors">
+                    <p
+                      :style="{
+                        backgroundColor: rgb(material._Color),
+                        color: getTextColor(material._Color),
+                      }"
+                    >
+                      基本色
+                    </p>
+                    <p
+                      :style="{
+                        backgroundColor: rgb(material._ShadeColor),
+                        color: getTextColor(material._ShadeColor),
+                      }"
+                    >
+                      影色
+                    </p>
+                    <p
+                      :style="{
+                        backgroundColor: rgb(material._HighlightColor),
+                        color: getTextColor(material._HighlightColor),
+                      }"
+                    >
+                      ハイライト
+                    </p>
+                    <p
+                      :style="{
+                        backgroundColor: rgb(material._OutlineColor),
+                        color: getTextColor(material._OutlineColor),
+                      }"
+                    >
+                      アウトライン
+                    </p>
+                  </div>
                 </div>
               </div>
             </span>
@@ -173,10 +193,36 @@ export default {
       message.value = { type: m.type, sentence: m.sentence };
     };
 
+    // メッセージボックスに適用するクラス
     const classesForMessage = (): string[] => {
       const classes = [`is-${message.value.type}`];
       if (isShowMessage.value) classes.push('is-show');
       return classes;
+    };
+
+    // 背景色に対して見やすい文字色を返す関数
+    // https://www.w3.org/TR/WCAG20/
+    const getTextColor = (color: Color) => {
+      // sRGB を RGB に変換する関数
+      const sRGBtoRGB = (item) => {
+        const i = item / 255;
+        return i <= 0.03928 ? i / 12.92 : Math.pow((i + 0.055) / 1.055, 2.4);
+      };
+
+      // 背景色の相対輝度
+      const relativeBrightness =
+        0.2126 * sRGBtoRGB(color.r) +
+        0.7152 * sRGBtoRGB(color.g) +
+        0.0722 * sRGBtoRGB(color.b);
+
+      // 白と背景色のコントラスト比
+      const contrast2White = (1 + 0.05) / (relativeBrightness + 0.05);
+
+      // 黒と背景色のコントラスト比
+      const contrast2Black = (relativeBrightness + 0.05) / (0 + 0.05);
+
+      // コントラスト比が大きいほうが見やすい
+      return contrast2White > contrast2Black ? 'white' : 'black';
     };
 
     return {
@@ -187,6 +233,7 @@ export default {
       isShowMessage,
       closeMessage,
       classesForMessage,
+      getTextColor,
     };
   },
 };
@@ -235,7 +282,17 @@ export default {
 }
 
 .material {
-  width: 200px;
+  width: 230px;
+}
+
+.material .box {
+  display: flex;
+}
+
+.material .colors p {
+  height: 25%;
+  padding-left: 4px;
+  padding-right: 4px;
 }
 
 .texture {
