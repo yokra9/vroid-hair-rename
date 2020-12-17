@@ -4,7 +4,7 @@
 
 [Node.js](https://nodejs.org/ja/) のインストールが必要です。
 
-ダウンロードZipファイルを解凍し、初期設定を行います。
+[ここ](https://github.com/yokra9/vroid-hair-rename/releases/download/v0.1.0/v0.1.0.zip)からダウンロードしたZipファイルを解凍し、初期設定を行います。
 `conf/main.json` をメモ帳などで開き、`presetDir` に VRoid のヘアープリセット保存先を指定してください。一般的には下記のようになるはずです。
 
 ```json
