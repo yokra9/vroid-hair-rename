@@ -3,6 +3,7 @@ import { Presets, FilteredPreset } from './presets';
 import { Preset } from './preset';
 const path = require('path');
 const fs = require('fs');
+const archiver = require('archiver');
 
 interface Item {
   // ディレクトリ名
@@ -11,7 +12,16 @@ interface Item {
   preset: Preset;
 }
 
-const presetDir = path.resolve(__dirname, '../tmp/p');
+const config = JSON.parse(
+  fs.readFileSync(path.resolve(__dirname, '../conf/main.json')),
+);
+const presetDir = path.resolve(__dirname, config.presetDir);
+
+const archive = archiver.create('zip', {});
+const output = fs.createWriteStream(path.join(presetDir, '..','renamer-backup.zip'));
+archive.pipe(output);
+archive.directory(path.join(presetDir),"/");
+archive.finalize();
 
 @Injectable()
 export class AppService {
