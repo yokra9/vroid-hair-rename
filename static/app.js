@@ -11757,7 +11757,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_1___default()((_node_modules_css_loader_dist_runtime_cssWithMappingToString_js__WEBPACK_IMPORTED_MODULE_0___default()));
 ___CSS_LOADER_EXPORT___.i(_node_modules_css_loader_dist_cjs_js_node_modules_bulma_css_bulma_min_css__WEBPACK_IMPORTED_MODULE_2__.default);
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.sticky {\r\n  position: sticky;\r\n  top: 0;\n}\n.preset {\r\n  margin-bottom: 20px;\n}\n.material_slider {\r\n  overflow-x: scroll;\n}\n.material_list {\r\n  display: inline-flex;\n}\n.material {\r\n  width: 200px;\n}\n.texture {\r\n  height: 150px;\n}\r\n", "",{"version":3,"sources":["webpack://./src2/Editor.vue"],"names":[],"mappings":";AA2GA;EACE,gBAAgB;EAChB,MAAM;AACR;AAEA;EACE,mBAAmB;AACrB;AAEA;EACE,kBAAkB;AACpB;AAEA;EACE,oBAAoB;AACtB;AAEA;EACE,YAAY;AACd;AAEA;EACE,aAAa;AACf","sourcesContent":["<template>\r\n  <div class=\"columns\">\r\n    <aside class=\"column is-one-fifth menu\">\r\n      <div class=\"sticky\">\r\n        <p class=\"menu-label\">テクスチャ</p>\r\n        <ul class=\"menu-list\">\r\n          <li v-for=\"preset in presets\" :key=\"preset.name\">\r\n            <a :href=\"`#${preset.name}`\">{{ preset.name }}</a>\r\n          </li>\r\n        </ul>\r\n      </div>\r\n    </aside>\r\n\r\n    <div class=\"column is-four-fifths menu\">\r\n      <div\r\n        v-for=\"preset in presets\"\r\n        :key=\"preset.name\"\r\n        class=\"preset box\"\r\n        :id=\"preset.name\"\r\n      >\r\n        <input\r\n          type=\"text\"\r\n          v-model=\"preset.displayName\"\r\n          @change=\"postPreset()\"\r\n          :placeholder=\"preset.name\"\r\n          class=\"input is-info column mr-2\"\r\n        />\r\n        <div class=\"material_slider mb-2\">\r\n          <span class=\"material_list\">\r\n            <div\r\n              v-for=\"material in preset.materials\"\r\n              :key=\"material.name\"\r\n              class=\"material\"\r\n            >\r\n              <div class=\"box mr-4\">\r\n                <img\r\n                  :src=\"`data:image/png;base64,${material.texture}`\"\r\n                  class=\"texture\"\r\n                />\r\n                <p :style=\"{ backgroundColor: rgb(material._Color) }\">基本色</p>\r\n                <p :style=\"{ backgroundColor: rgb(material._ShadeColor) }\">\r\n                  影色\r\n                </p>\r\n                <p :style=\"{ backgroundColor: rgb(material._HighlightColor) }\">\r\n                  ハイライト\r\n                </p>\r\n                <p :style=\"{ backgroundColor: rgb(material._OutlineColor) }\">\r\n                  アウトライン\r\n                </p>\r\n              </div>\r\n            </div>\r\n          </span>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { ref, onMounted } from 'vue';\r\nimport { Presets, FilteredPreset } from '../src/presets';\r\nimport axios from 'axios';\r\nimport { Color, Preset } from 'src/preset';\r\n\r\nexport default {\r\n  setup() {\r\n    const presets = ref<FilteredPreset[]>([]);\r\n\r\n    // プリセットを取得\r\n    const getPreset = async () => {\r\n      try {\r\n        const res = await axios.get<Presets>('./');\r\n        presets.value = res.data.presets;\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n      }\r\n    };\r\n\r\n    // プリセットを更新\r\n    const postPreset = async () => {\r\n      const data: Presets = {\r\n        presets: presets.value,\r\n      };\r\n\r\n      try {\r\n        const res = await axios.post('./', data);\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n      }\r\n    };\r\n\r\n    const rgb = (color: Color) => `rgb(${color.r}, ${color.g}, ${color.b})`;\r\n\r\n    onMounted(() => getPreset());\r\n\r\n    return {\r\n      presets,\r\n      postPreset,\r\n      rgb,\r\n    };\r\n  },\r\n};\r\n</script>\r\n\r\n<style>\r\n@import url('bulma/css/bulma.min.css');\r\n\r\n.sticky {\r\n  position: sticky;\r\n  top: 0;\r\n}\r\n\r\n.preset {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.material_slider {\r\n  overflow-x: scroll;\r\n}\r\n\r\n.material_list {\r\n  display: inline-flex;\r\n}\r\n\r\n.material {\r\n  width: 200px;\r\n}\r\n\r\n.texture {\r\n  height: 150px;\r\n}\r\n</style>"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.navbar {\r\n  position: sticky;\r\n  top: 0;\r\n  height: 56px;\r\n  background-color: #ffffff50;\n}\n.message {\r\n  position: fixed;\r\n  width: 50%;\r\n  z-index: 1;\r\n  top: 56px;\r\n  right: 12px;\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  opacity: 0;\n}\n.is-show {\r\n  opacity: 1;\n}\n.sticky {\r\n  position: sticky;\r\n  top: 56px;\n}\n.preset {\r\n  margin-bottom: 20px;\n}\n.material_slider {\r\n  overflow-x: scroll;\n}\n.material_list {\r\n  display: inline-flex;\n}\n.material {\r\n  width: 200px;\n}\n.texture {\r\n  height: 150px;\n}\r\n", "",{"version":3,"sources":["webpack://./src2/Editor.vue"],"names":[],"mappings":";AAqMA;EACE,gBAAgB;EAChB,MAAM;EACN,YAAY;EACZ,2BAA2B;AAC7B;AAEA;EACE,eAAe;EACf,UAAU;EACV,UAAU;EACV,SAAS;EACT,WAAW;EACX,4BAA4B;EAC5B,yBAAyB;EACzB,UAAU;AACZ;AAEA;EACE,UAAU;AACZ;AAEA;EACE,gBAAgB;EAChB,SAAS;AACX;AAEA;EACE,mBAAmB;AACrB;AAEA;EACE,kBAAkB;AACpB;AAEA;EACE,oBAAoB;AACtB;AAEA;EACE,YAAY;AACd;AAEA;EACE,aAAa;AACf","sourcesContent":["<template>\r\n  <div>\r\n    <!-- 上部ナビゲーション -->\r\n    <nav class=\"navbar\" role=\"navigation\" aria-label=\"main navigation\">\r\n      <div class=\"navbar-brand\">\r\n        <a class=\"navbar-item\" href=\"./edit.html\">\r\n          VRoidのヘアマテリアル管理するやつ\r\n        </a>\r\n      </div>\r\n\r\n      <div class=\"navbar-menu\">\r\n        <div class=\"navbar-end\">\r\n          <div class=\"navbar-item\">\r\n            <a class=\"button is-primary\" @click=\"postPreset()\">\r\n              <strong>更新</strong>\r\n            </a>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </nav>\r\n\r\n    <!-- メッセージ -->\r\n    <article class=\"message\" :class=\"classesForMessage()\">\r\n      <div class=\"message-header\">\r\n        <p>メッセージ</p>\r\n        <button\r\n          class=\"delete\"\r\n          aria-label=\"delete\"\r\n          @click=\"closeMessage()\"\r\n        ></button>\r\n      </div>\r\n      <div class=\"message-body\" v-text=\"message.sentence\" />\r\n    </article>\r\n\r\n    <!-- メインコンテンツ -->\r\n    <div class=\"columns\">\r\n      <!-- 左メニュー -->\r\n      <aside class=\"column is-one-fifth menu\">\r\n        <div class=\"sticky ml-3\">\r\n          <p class=\"menu-label\">テクスチャ</p>\r\n          <ul class=\"menu-list\">\r\n            <li v-for=\"preset in presets\" :key=\"preset.name\">\r\n              <a :href=\"`#${preset.name}`\">{{ preset.name }}</a>\r\n            </li>\r\n          </ul>\r\n        </div>\r\n      </aside>\r\n\r\n      <!-- プリセット一覧 -->\r\n      <div class=\"column is-four-fifths menu\">\r\n        <!-- プリセット -->\r\n        <div\r\n          v-for=\"preset in presets\"\r\n          :key=\"preset.name\"\r\n          class=\"preset box\"\r\n          :id=\"preset.name\"\r\n        >\r\n          <!-- プリセット名の入力 -->\r\n          <input\r\n            type=\"text\"\r\n            v-model=\"preset.displayName\"\r\n            :placeholder=\"preset.name\"\r\n            class=\"input is-info column mr-2\"\r\n          />\r\n\r\n          <!-- マテリアル一覧 -->\r\n          <div class=\"material_slider mb-2\">\r\n            <span class=\"material_list\">\r\n              <!-- マテリアル -->\r\n              <div\r\n                v-for=\"material in preset.materials\"\r\n                :key=\"material.name\"\r\n                class=\"material\"\r\n              >\r\n                <div class=\"box mr-4\">\r\n                  <img\r\n                    :src=\"`data:image/png;base64,${material.texture}`\"\r\n                    class=\"texture\"\r\n                  />\r\n                  <p :style=\"{ backgroundColor: rgb(material._Color) }\">\r\n                    基本色\r\n                  </p>\r\n                  <p :style=\"{ backgroundColor: rgb(material._ShadeColor) }\">\r\n                    影色\r\n                  </p>\r\n                  <p\r\n                    :style=\"{ backgroundColor: rgb(material._HighlightColor) }\"\r\n                  >\r\n                    ハイライト\r\n                  </p>\r\n                  <p :style=\"{ backgroundColor: rgb(material._OutlineColor) }\">\r\n                    アウトライン\r\n                  </p>\r\n                </div>\r\n              </div>\r\n            </span>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</template>\r\n\r\n<script lang=\"ts\">\r\nimport { ref, onMounted } from 'vue';\r\nimport { Presets, FilteredPreset } from '../src/presets';\r\nimport axios from 'axios';\r\nimport { Color, Preset } from 'src/preset';\r\n\r\nexport default {\r\n  setup() {\r\n    // プリセット情報\r\n    const presets = ref<FilteredPreset[]>([]);\r\n\r\n    // プリセットを取得する関数\r\n    const getPreset = async () => {\r\n      try {\r\n        const res = await axios.get<Presets>('./');\r\n        presets.value = res.data.presets;\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n        openMessage({\r\n          type: 'danger',\r\n          sentence: `取得に失敗しました...\\n${err.response.data.message}`,\r\n        });\r\n      }\r\n    };\r\n\r\n    // 初期化時に実行\r\n    onMounted(() => getPreset());\r\n\r\n    // プリセットを更新する関数\r\n    const postPreset = async () => {\r\n      const data: Presets = {\r\n        presets: presets.value,\r\n      };\r\n\r\n      try {\r\n        const res = await axios.post('./', data);\r\n        openMessage({ type: 'success', sentence: '更新しました！' });\r\n      } catch (err) {\r\n        console.error(err.response.data);\r\n        openMessage({\r\n          type: 'danger',\r\n          sentence: `更新に失敗しました...\\n${err.response.data.message}`,\r\n        });\r\n      }\r\n    };\r\n\r\n    // Color 型から rgb(R,G,B)に変換する関数\r\n    const rgb = (color: Color) => `rgb(${color.r}, ${color.g}, ${color.b})`;\r\n\r\n    // メッセージ型\r\n    interface Message {\r\n      type: 'primary' | 'link' | 'info' | 'success' | 'warning' | 'danger';\r\n      sentence: string;\r\n    }\r\n\r\n    // メッセージ情報\r\n    const message = ref<Message>({ type: 'primary', sentence: 'メッセージ' });\r\n\r\n    // メッセージ表示フラグ\r\n    const isShowMessage = ref<boolean>(false);\r\n\r\n    // メッセージを閉じる関数\r\n    const closeMessage = () => {\r\n      isShowMessage.value = false;\r\n    };\r\n\r\n    // メッセージを設定して表示する関数\r\n    const openMessage = (m: Message) => {\r\n      isShowMessage.value = true;\r\n      message.value = { type: m.type, sentence: m.sentence };\r\n    };\r\n\r\n    const classesForMessage = (): string[] => {\r\n      const classes = [`is-${message.value.type}`];\r\n      if (isShowMessage.value) classes.push('is-show');\r\n      return classes;\r\n    };\r\n\r\n    return {\r\n      presets,\r\n      postPreset,\r\n      rgb,\r\n      message,\r\n      isShowMessage,\r\n      closeMessage,\r\n      classesForMessage,\r\n    };\r\n  },\r\n};\r\n</script>\r\n\r\n<style>\r\n@import url('bulma/css/bulma.min.css');\r\n\r\n.navbar {\r\n  position: sticky;\r\n  top: 0;\r\n  height: 56px;\r\n  background-color: #ffffff50;\r\n}\r\n\r\n.message {\r\n  position: fixed;\r\n  width: 50%;\r\n  z-index: 1;\r\n  top: 56px;\r\n  right: 12px;\r\n  transition-property: opacity;\r\n  transition-duration: 0.5s;\r\n  opacity: 0;\r\n}\r\n\r\n.is-show {\r\n  opacity: 1;\r\n}\r\n\r\n.sticky {\r\n  position: sticky;\r\n  top: 56px;\r\n}\r\n\r\n.preset {\r\n  margin-bottom: 20px;\r\n}\r\n\r\n.material_slider {\r\n  overflow-x: scroll;\r\n}\r\n\r\n.material_list {\r\n  display: inline-flex;\r\n}\r\n\r\n.material {\r\n  width: 200px;\r\n}\r\n\r\n.texture {\r\n  height: 150px;\r\n}\r\n</style>"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -12212,25 +12212,53 @@ exports.default = {
             }
             catch (err) {
                 console.error(err.response.data);
+                openMessage({
+                    type: 'danger',
+                    sentence: `取得に失敗しました...\n${err.response.data.message}`,
+                });
             }
         };
+        vue_1.onMounted(() => getPreset());
         const postPreset = async () => {
             const data = {
                 presets: presets.value,
             };
             try {
                 const res = await axios_1.default.post('./', data);
+                openMessage({ type: 'success', sentence: '更新しました！' });
             }
             catch (err) {
                 console.error(err.response.data);
+                openMessage({
+                    type: 'danger',
+                    sentence: `更新に失敗しました...\n${err.response.data.message}`,
+                });
             }
         };
         const rgb = (color) => `rgb(${color.r}, ${color.g}, ${color.b})`;
-        vue_1.onMounted(() => getPreset());
+        const message = vue_1.ref({ type: 'primary', sentence: 'メッセージ' });
+        const isShowMessage = vue_1.ref(false);
+        const closeMessage = () => {
+            isShowMessage.value = false;
+        };
+        const openMessage = (m) => {
+            isShowMessage.value = true;
+            message.value = { type: m.type, sentence: m.sentence };
+        };
+        const classesForMessage = () => {
+            const classes = [`is-${message.value.type}`];
+            if (isShowMessage.value)
+                classes.push('is-show');
+            return classes;
+        };
         return {
             presets,
             postPreset,
             rgb,
+            message,
+            isShowMessage,
+            closeMessage,
+            classesForMessage,
         };
     },
 };
@@ -12328,81 +12356,139 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.runtime.esm-bundler.js");
 
 
-const _hoisted_1 = { class: "columns" }
-const _hoisted_2 = { class: "column is-one-fifth menu" }
-const _hoisted_3 = { class: "sticky" }
-const _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", { class: "menu-label" }, "テクスチャ", -1 /* HOISTED */)
-const _hoisted_5 = { class: "menu-list" }
-const _hoisted_6 = { class: "column is-four-fifths menu" }
-const _hoisted_7 = { class: "material_slider mb-2" }
-const _hoisted_8 = { class: "material_list" }
-const _hoisted_9 = { class: "box mr-4" }
+const _hoisted_1 = {
+  class: "navbar",
+  role: "navigation",
+  "aria-label": "main navigation"
+}
+const _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", { class: "navbar-brand" }, [
+  /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+    class: "navbar-item",
+    href: "./edit.html"
+  }, " VRoidのヘアマテリアル管理するやつ ")
+], -1 /* HOISTED */)
+const _hoisted_3 = { class: "navbar-menu" }
+const _hoisted_4 = { class: "navbar-end" }
+const _hoisted_5 = { class: "navbar-item" }
+const _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("strong", null, "更新", -1 /* HOISTED */)
+const _hoisted_7 = { class: "message-header" }
+const _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "メッセージ", -1 /* HOISTED */)
+const _hoisted_9 = { class: "columns" }
+const _hoisted_10 = { class: "column is-one-fifth menu" }
+const _hoisted_11 = { class: "sticky ml-3" }
+const _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", { class: "menu-label" }, "テクスチャ", -1 /* HOISTED */)
+const _hoisted_13 = { class: "menu-list" }
+const _hoisted_14 = { class: "column is-four-fifths menu" }
+const _hoisted_15 = { class: "material_slider mb-2" }
+const _hoisted_16 = { class: "material_list" }
+const _hoisted_17 = { class: "box mr-4" }
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("aside", _hoisted_2, [
+  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", null, [
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 上部ナビゲーション "),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("nav", _hoisted_1, [
+      _hoisted_2,
       (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [
-        _hoisted_4,
-        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_5, [
-          ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.presets, (preset) => {
-            return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
-              key: preset.name
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+              class: "button is-primary",
+              onClick: _cache[1] || (_cache[1] = $event => ($setup.postPreset()))
             }, [
-              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-                href: `#${preset.name}`
-              }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(preset.name), 9 /* TEXT, PROPS */, ["href"])
-            ]))
-          }), 128 /* KEYED_FRAGMENT */))
+              _hoisted_6
+            ])
+          ])
         ])
       ])
     ]),
-    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [
-      ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.presets, (preset) => {
-        return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-          key: preset.name,
-          class: "preset box",
-          id: preset.name
-        }, [
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-            type: "text",
-            "onUpdate:modelValue": $event => (preset.displayName = $event),
-            onChange: _cache[1] || (_cache[1] = $event => ($setup.postPreset())),
-            placeholder: preset.name,
-            class: "input is-info column mr-2"
-          }, null, 40 /* PROPS, HYDRATE_EVENTS */, ["onUpdate:modelValue", "placeholder"]), [
-            [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, preset.displayName]
-          ]),
-          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
-            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_8, [
-              ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(preset.materials, (material) => {
-                return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
-                  key: material.name,
-                  class: "material"
-                }, [
-                  (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [
-                    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
-                      src: `data:image/png;base64,${material.texture}`,
-                      class: "texture"
-                    }, null, 8 /* PROPS */, ["src"]),
-                    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-                      style: { backgroundColor: $setup.rgb(material._Color) }
-                    }, "基本色", 4 /* STYLE */),
-                    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-                      style: { backgroundColor: $setup.rgb(material._ShadeColor) }
-                    }, " 影色 ", 4 /* STYLE */),
-                    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-                      style: { backgroundColor: $setup.rgb(material._HighlightColor) }
-                    }, " ハイライト ", 4 /* STYLE */),
-                    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
-                      style: { backgroundColor: $setup.rgb(material._OutlineColor) }
-                    }, " アウトライン ", 4 /* STYLE */)
-                  ])
-                ]))
-              }), 128 /* KEYED_FRAGMENT */))
-            ])
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" メッセージ "),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("article", {
+      class: ["message", $setup.classesForMessage()]
+    }, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [
+        _hoisted_8,
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+          class: "delete",
+          "aria-label": "delete",
+          onClick: _cache[2] || (_cache[2] = $event => ($setup.closeMessage()))
+        })
+      ]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+        class: "message-body",
+        textContent: (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.message.sentence)
+      }, null, 8 /* PROPS */, ["textContent"])
+    ], 2 /* CLASS */),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" メインコンテンツ "),
+    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 左メニュー "),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("aside", _hoisted_10, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [
+          _hoisted_12,
+          (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("ul", _hoisted_13, [
+            ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.presets, (preset) => {
+              return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
+                key: preset.name
+              }, [
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+                  href: `#${preset.name}`
+                }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(preset.name), 9 /* TEXT, PROPS */, ["href"])
+              ]))
+            }), 128 /* KEYED_FRAGMENT */))
           ])
-        ], 8 /* PROPS */, ["id"]))
-      }), 128 /* KEYED_FRAGMENT */))
+        ])
+      ]),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" プリセット一覧 "),
+      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [
+        (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" プリセット "),
+        ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($setup.presets, (preset) => {
+          return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+            key: preset.name,
+            class: "preset box",
+            id: preset.name
+          }, [
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" プリセット名の入力 "),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+              type: "text",
+              "onUpdate:modelValue": $event => (preset.displayName = $event),
+              placeholder: preset.name,
+              class: "input is-info column mr-2"
+            }, null, 8 /* PROPS */, ["onUpdate:modelValue", "placeholder"]), [
+              [vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, preset.displayName]
+            ]),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" マテリアル一覧 "),
+            (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [
+              (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_16, [
+                (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" マテリアル "),
+                ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(preset.materials, (material) => {
+                  return ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+                    key: material.name,
+                    class: "material"
+                  }, [
+                    (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [
+                      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+                        src: `data:image/png;base64,${material.texture}`,
+                        class: "texture"
+                      }, null, 8 /* PROPS */, ["src"]),
+                      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+                        style: { backgroundColor: $setup.rgb(material._Color) }
+                      }, " 基本色 ", 4 /* STYLE */),
+                      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+                        style: { backgroundColor: $setup.rgb(material._ShadeColor) }
+                      }, " 影色 ", 4 /* STYLE */),
+                      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+                        style: { backgroundColor: $setup.rgb(material._HighlightColor) }
+                      }, " ハイライト ", 4 /* STYLE */),
+                      (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+                        style: { backgroundColor: $setup.rgb(material._OutlineColor) }
+                      }, " アウトライン ", 4 /* STYLE */)
+                    ])
+                  ]))
+                }), 128 /* KEYED_FRAGMENT */))
+              ])
+            ])
+          ], 8 /* PROPS */, ["id"]))
+        }), 128 /* KEYED_FRAGMENT */))
+      ])
     ])
   ]))
 }
