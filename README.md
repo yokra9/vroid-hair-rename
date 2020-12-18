@@ -19,6 +19,10 @@
 node index.js
 ```
 
+Google Chrome もしくは Microsoft Edge で [http://localhost:3000/edit.html](http://localhost:3000/edit.html) にアクセスすると、プリセットの一覧が表示されます。名前を変更したいプリセットを探し、更新してください。
+
+![操作](./play.gif)
+
 ## ライセンス
 
 MITライセンスとします。
